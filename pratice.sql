@@ -90,7 +90,37 @@ COALESCE(additionals, "O complemento é nulo") AS complemento
 FROM ecommerce.customers
 LIMIT 10;
 
+##group by e order by
 
+SELECT DISTINCT
+  status
+FROM `bigquery-public-data.thelook_ecommerce.orders`;
+
+SELECT
+  status
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY status;
+
+
+SELECT
+COUNT(DISTINCT order_id) AS numero_pedidos,
+DATE(created_at) AS dia
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY 2;
+
+SELECT
+COUNT(DISTINCT order_id) AS numero_pedidos,
+DATE(created_at) AS dia
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY dia
+ORDER BY dia ASC;
+
+SELECT
+COUNT(DISTINCT order_id) AS numero_pedidos,
+DATE(created_at) AS dia
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY dia
+ORDER BY dia DESC;
 
 
 
