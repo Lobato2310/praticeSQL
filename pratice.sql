@@ -203,6 +203,85 @@ SELECT DISTINCT
 FROM `bigquery-public-data.baseball.schedules`
 WHERE homeTeamName LIKE "______";
 
+#count
+SELECT
+  COUNT(id) AS qtde_usuarios,
+  COUNT(DISTINCT id) AS qtde_usuarios2
+FROM `bigquery-public-data.thelook_ecommerce.users`;
+
+
+SELECT
+  COUNT(DISTINCT order_id) qtde_pedidos,
+  DATE(created_at) dia
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY dia
+ORDER BY dia DESC;
+
+
+SELECT
+  COUNT(DISTINCT order_id) qtde_pedidos,
+  EXTRACT(YEAR FROM created_at) ano
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+GROUP BY ano
+ORDER BY ano DESC;
+
+
+#MAX/MIN
+
+SELECT
+  MAX(retail_price) AS preco_maximo_produto
+FROM `bigquery-public-data.thelook_ecommerce.products`;
+
+SELECT
+  ROUND(MIN(retail_price), 2) AS preco_minimo_produto,
+  ROUND(MAX(retail_price), 2) AS preco_maximo_produto
+FROM `bigquery-public-data.thelook_ecommerce.products`;
+
+
+SELECT
+  ROUND(MIN(retail_price), 2) AS preco_minimo_produto,
+  ROUND(MAX(retail_price), 2) AS preco_maximo_produto,
+  c.name
+FROM `bigquery-public-data.thelook_ecommerce.products` p
+JOIN `bigquery-public-data.thelook_ecommerce.distribution_centers` c ON p.distribution_center_id = c.id
+GROUP BY name
+ORDER BY 2;
+
+SELECT
+  MIN(created_at) AS data_cadastro_mais_antiga,
+  MAX(created_at) AS data_cadastro_mais_recente,
+FROM `bigquery-public-data.thelook_ecommerce.users`;
+
+#SUM
+SELECT
+ ROUND(SUM(sale_price), 2) AS receita
+FROM `bigquery-public-data.thelook_ecommerce.order_items`
+WHERE status = "Complete";
+
+SELECT
+ ROUND(SUM(sale_price), 2) AS receita,
+ FORMAT_DATE("%Y-%m", created_at) AS mes
+FROM `bigquery-public-data.thelook_ecommerce.order_items`
+WHERE status = "Complete"
+GROUP BY mes
+ORDER BY mes;
+
+
+SELECT
+  SUM(IF(country="Brasil", 1, 0)) AS cadastrados_Brasil
+FROM `bigquery-public-data.thelook_ecommerce.users`
+
+
+ #AVG-Average
+
+
+SELECT
+ ROUND(AVG(sale_price), 2) AS ticket_medio,
+ FORMAT_DATE("%Y-%m", created_at) AS mes
+FROM `bigquery-public-data.thelook_ecommerce.order_items`
+WHERE status = "Complete"
+GROUP BY mes
+ORDER BY mes;
 
 
 
